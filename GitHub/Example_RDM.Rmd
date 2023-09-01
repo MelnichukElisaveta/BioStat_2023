@@ -7,6 +7,18 @@ output: word_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+packages_list <- c('dplyr', 'tidyverse', 'tidyr', "readr", 'readxl', 'haven', 
+                   'purrr', 'tibble', 'ggplot2', 'ggpubr', 'stringr', 
+                   'flextable', 'lubridate', 'DescTools', 'psych')
+for (i in packages_list) {
+  if (!(i %in% installed.packages()[, 1])) {
+    msg <- paste('Пакет ', i, 'не установлен!')
+    stop(msg, call. = FALSE)
+  }
+  library(i, character.only = TRUE, verbose = FALSE)
+  message(paste('Пакет ', i, 'подключен'))
+}
 ```
 
 ## R Markdown
