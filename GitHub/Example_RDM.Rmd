@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 packages_list <- c('dplyr', 'tidyverse', 'tidyr', "readr", 'readxl', 'haven', 
                    'purrr', 'tibble', 'ggplot2', 'ggpubr', 'stringr', 
-                   'flextable', 'lubridate', 'DescTools', 'psych')
+                   'flextable', 'lubridate', 'DescTools', 'psych', 'openxlsx')
 for (i in packages_list) {
   if (!(i %in% installed.packages()[, 1])) {
     msg <- paste('Пакет ', i, 'не установлен!')
@@ -40,3 +40,52 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Функции для чтения и записи файлов
+```{r}
+read.csv("data.csv", encoding = "UTF-8")
+
+read_csv("data.csv", skip = 0, n_max = Inf)
+```
+read.csv() читает csv с запятой в качестве разделителя
+read.csv2() читает csv с точкойс запятой в качестве разделителя, а также Excel
+read.tsv() читает csv со знаком табуляции в качестве разделителя (часто файлы в формате .txt)
+Параметр header говорит функции, является ли первая строка заголовком для столбцов
+
+write.csv() write.csv2() функции выгрузки датафрейма в файл
+
+readr::read_csv()
+readr::read_csv2()
+readr::read_tsv()
+
+readxl::read_excel() если не указать соответствующий аргумент, то будет прочитан только первый лист
+
+```{r}
+read_excel("data_excel.xlsx", sheet = "data")
+```
+
+
+readr::write_csv()
+readr::write_csv2()
+readr::write_excel_csv()
+readr::write_excel_csv2()
+readr::write_tsv()
+
+openxlsx::write.xlsx()
+
+```{r}
+iris
+write_excel_csv(iris, "iris_csv.csv")
+```
+```{r}
+write.xlsx(cars, "cars_excel.xlsx", colNames = TRUE)
+```
+
+Для данных SPSS или SAS
+haven::read_spss()
+haven::read_sas()
+haven::write_sav()
+
+Для формата rds. Если переменные приведены к одному из двух типов: количественный или факторный, то сохраняются и типы. Сохраняет модели, списки, переменные.Удобно сохранять свои промежуточные данные, если нет необходимости предавать другим людям.
+readr::read_rds()
+readr::write_rds()
