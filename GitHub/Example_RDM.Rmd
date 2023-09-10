@@ -115,6 +115,7 @@ length()
 
 sd(x)/sqrt(length(x)) стандартная ошибка среднего
 
+## Обобщающие функции статистик
 summary()
 
 psych::describe(x, na.rm = TRUE, skew = TRUE, ranges = TRUE)
@@ -135,4 +136,5 @@ table(data$Группа, data$'Группа крови')
 ```{r}
 prop.table(table(data$Группа, data$'Группа крови'))
 ```
+
 
