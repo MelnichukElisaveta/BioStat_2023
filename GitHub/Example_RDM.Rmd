@@ -10,7 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 
 packages_list <- c('dplyr', 'tidyverse', 'tidyr', "readr", 'readxl', 'haven', 
                    'purrr', 'tibble', 'ggplot2', 'ggpubr', 'stringr', 
-                   'flextable', 'lubridate', 'DescTools', 'psych', 'openxlsx')
+                   'flextable', 'lubridate', 'DescTools', 'psych', 'openxlsx',
+                   'ggfortify', 'survival', 'survminer', 'survMisc', 'cmprsk', 'aod',
+                   'pheatmap', 'TrialSize', 'pROC', 'plotly', 'corrplot', 'corrr',
+                   'factoextra', 'FactoMineR', 'ggbiplot', 'dagitty', 'tidymodels', 'rpart',
+                   'rattle', 'multcomp', 'GGally', 'yardstick', 'Hmisc', 'broom', 'ggfortify')
 for (i in packages_list) {
   if (!(i %in% installed.packages()[, 1])) {
     msg <- paste('Пакет ', i, 'не установлен!')
