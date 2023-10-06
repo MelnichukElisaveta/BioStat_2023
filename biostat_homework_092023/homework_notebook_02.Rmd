@@ -16,31 +16,87 @@ library(tidyverse)
 В вашем варианте нужно использовать датасет food.
 
 ```{r}
-data <- read_csv("C:/Users/Лиза/git/first-project/biostat_homework_092023/data/raw/food.csv")
+data <- read_csv("C:/Users/Лиза/git/BioStat_2023/biostat_homework_092023/data/raw/food.csv")
 
 ```
 
 # Выведите общее описание данных
 
 ```{r}
+data %>% summary()
 
-
-
+data %>% 
+  select(!c(Category, Description, `Nutrient Data Bank Number`)) %>%
+  psych::describe()
+# или другой вариант, где мы выбираем только столбцы с колличественными данными
+data %>% 
+  select(where(is.numeric)) %>%
+  psych::describe()
 ```
 
 # Очистка данных
 
 1) Уберите переменные, в которых пропущенных значений больше 20% или уберите субъектов со слишком большим количеством пропущенных значений. Или совместите оба варианта. Напишите обоснование, почему вы выбрали тот или иной вариант:
 
+```{r}
+sum(!complete.cases(data))
+# в данных нет пропущенных значений   
+```
+
+
 **Обоснование**: 
 
 2) Переименуйте переменные в человекочитаемый вид (что делать с пробелами в названиях?);
 
+Для работы с переменными содержащие пробелы можно использовать ординарные кавычки `Nutrient Data Bank Number`
+Или заменить пробел на точку или нижнее подчеркиваниее
+
+```{r}
+data <- data %>%
+  rename(`Nutrient_Data_Bank_Number` = `Nutrient Data Bank Number`)
+```
+Уберем тавтологию, например, `Data.Vitamins.Vitamin K`  заменим на `Data.Vitamin K`
+
+```{r}
+data <- data %>%
+  rename_with(function(x) x %>% stringi::stri_replace_all_regex(c("Vitamins."), c(""), vectorize_all = FALSE))
+```
+Аналогично
+```{r}
+data <- data %>%
+  rename_with(function(x) x %>% 
+                stringi::stri_replace_all_regex(c("Data.", "Fat.", "Major Minerals."), c("", "", ""), vectorize_all = FALSE))
+```
+
+Заменим пробелы 
+```{r}
+data <- data %>%
+  rename_with(function(x) x %>% 
+                stringi::stri_replace_all_regex(" ", "_", vectorize_all = FALSE))
+```
+
+
+
 3) В соответствии с описанием данных приведите переменные к нужному типу (numeric или factor);
 
-4) Отсортируйте данные по возрасту по убыванию;
+```{r}
+data <- data %>% 
+  mutate(across(c(Category, Description, Nutrient_Bank_Number), ~ as.factor(.x)))
+```
+
+
+4) Отсортируйте данные по углеводам по убыванию;
+
+```{r}
+data <- data %>%
+  arrange(desc(Carbohydrate))
+head(data)
+```
+
 
 5) Сохраните в файл outliers.csv субъектов, которые являются выбросами (например, по правилу трёх сигм) — это необязательное задание со звёздочкой;
+
+
 
 6) Отфильтруйте датасет так, чтобы остались только Rice и Cookie (переменная Category и есть группирующая);
 
