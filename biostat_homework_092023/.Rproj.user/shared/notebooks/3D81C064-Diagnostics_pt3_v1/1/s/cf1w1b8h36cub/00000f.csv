@@ -1,0 +1,12 @@
+"0",""
+"0","arteries_data %>%"
+"0","    mutate(Perf_Cv = (Perf_SD / Perf_M * 100) %>% round(1)) %>% "
+"0","    roc(Arterial_occlusion, Perf_Cv, ci = T)"
+"1","[1m[33mError[39m in `mutate()`:[22m
+[38;5;232m[36mℹ[38;5;232m In argument: `Perf_Cv = (Perf_SD/Perf_M * 100) %>% round(1)`.[39m
+[1mCaused by error:[22m
+[33m![39m object 'Perf_SD' not found
+Backtrace:
+[90m  1. [39m... %>% roc(Arterial_occlusion, Perf_Cv, ci = T)
+[90m 10. [39m(Perf_SD/Perf_M * 100) %>% round(1)
+"

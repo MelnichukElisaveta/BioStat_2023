@@ -1,0 +1,8 @@
+"0",""
+"0","series_1 %>% "
+"0","    summarise("
+"0","        across("
+"0","            where(is.numeric),"
+"0","            ~ sum(if_else(.x < 0.05, 1, 0))"
+"0","        )"
+"0","    )"

@@ -1,0 +1,10 @@
+"0","data <- read_csv(""C:/Users/Лиза/git/first-project/biostat_homework_092023/data/raw/food.csv"")
+"
+"2","[1mRows: [22m[34m7083[39m [1mColumns: [22m[34m38[39m"
+"2","[36m──[39m [1mColumn specification[22m [36m───────────────────────────────────────────────────────────────────────────────────[39m
+[1mDelimiter:[22m "",""
+[31mchr[39m  (2): Category, Description
+[32mdbl[39m (36): Nutrient Data Bank Number, Data.Alpha Carotene, Data.Beta Carotene, Data.Beta Cryptoxanthin, ..."
+"2","
+[36mℹ[39m Use `spec()` to retrieve the full column specification for this data.
+[36mℹ[39m Specify the column types or set `show_col_types = FALSE` to quiet this message."

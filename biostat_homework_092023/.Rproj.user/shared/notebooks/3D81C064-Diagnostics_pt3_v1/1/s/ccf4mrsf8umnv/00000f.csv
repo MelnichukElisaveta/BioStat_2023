@@ -1,0 +1,143 @@
+"0",""
+"0","arteries_data_cleaned %>% names()"
+"1"," [1]"
+"1"," ""id""                "
+"1"," ""center""            "
+"1"," ""US_diameter""       "
+"1"," ""Arterial_occlusion"""
+"1","
+"
+"1"," [5]"
+"1"," ""Side""              "
+"1"," ""Age""               "
+"1"," ""Height""            "
+"1"," ""Weight""            "
+"1","
+"
+"1"," [9]"
+"1"," ""SAP""               "
+"1"," ""DAP""               "
+"1"," ""ABI""               "
+"1"," ""Perf_M""            "
+"1","
+"
+"1","[13]"
+"1"," ""GLU""               "
+"1"," ""BMI""               "
+"1","
+"
+"0","arteries_data_cleaned %>% "
+"0","    "
+"0","    select(""Arterial_occlusion"","
+"0","           ""Age"","
+"0","           ""Height"","
+"0","           ""Weight"","
+"0","           ""SAP"","
+"0","           ""DAP"","
+"0","           ""ABI"","
+"0","           ""Perf_M"","
+"0","           ""GLU"") %>% "
+"0","    "
+"0","    pivot_longer(cols = !Arterial_occlusion) %>% "
+"0","    "
+"0","    group_by(name) %>% "
+"0","    "
+"0","    summarise(AUC = roc(Arterial_occlusion, value, ci = T)$ci[2] %>% round(3),"
+"0","              AUC_LCL = roc(Arterial_occlusion, value, ci = T)$ci[1] %>% round(3),"
+"0","              AUC_UCL = roc(Arterial_occlusion, value, ci = T)$ci[3] %>% round(3))"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls < cases
+"
+"2","Setting levels: control = 0, case = 1
+"
+"2","Setting direction: controls > cases
+"
