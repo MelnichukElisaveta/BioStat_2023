@@ -320,22 +320,44 @@ cleaned_data %>%
 
 1.1) Абсолютное количество;
 ```{r}
+cleaned_data %>%
+  select(Category, where(is.factor)) %>%
+  count(Category) 
+   
 
-cleaned_data %>% 
-  select(Category, where(!is.numeric)) %>%
-  group_by(Category) %>%
-  summarize(across(where(!is.numeric), function(x) length(x))) 
 ```
+  
 
 
 1.2) Относительное количество внутри группы;
+```{r}
+cleaned_data %>%
+  select(Category, where(is.factor)) %>%
+  count(Category) %>%
+  mutate(`Процент по выборке` = (n / sum(n)) %>% round(4) %>% `*` (100) %>% str_c("%"))
+```
+
 
 1.3) 95% ДИ для доли внутри группы - задание со звёздочкой.
 
 ```{r}
+CI_95 <- cleaned_data %>%
+  select(Category, where(is.factor)) %>%
+  count(Category) %>%
+  mutate(`95% ДИ` = BinomCI(n, nrow(cleaned_data), conf.level = 0.95))
 
+view(CI_95)
 
+```
 
+```{r}
+cleaned_data %>%
+  select(Category, where(is.factor)) %>%
+  count(Category) %>%
+  group_by(Category) %>% 
+  mutate(`Процент по группе` = (n / sum(n)) %>% round(4) %>% `*` (100) %>% str_c("%")) %>%
+  ungroup() %>%
+  mutate(`Процент по выборке` = (n / sum(n)) %>% round(4) %>% `*` (100) %>% str_c("%"))
 ```
 
 # Визуализация
