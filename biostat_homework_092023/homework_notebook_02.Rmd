@@ -128,10 +128,12 @@ data %>%
 7) Присвойте получившийся датасет переменной "cleaned_data".
 
 ```{r}
-
+data <- data %>% 
+  mutate(across(Category, ~ as.character(.x)))
 cleaned_data <- data %>% 
   filter(Category == c("Rice", "Cookie"))
-
+cleaned_data <- cleaned_data %>%
+  mutate(across(Category, ~ as.factor(.x)))
 ```
 
 # Сколько осталось переменных?
@@ -566,14 +568,80 @@ ggplot(cleaned_data, aes(x= Category, y=Sodium, fill=Category)) +
  theme(legend.position ='none')
 ```
 
-2) Наложите на боксплоты beeplots - задание со звёздочкой.
-
-3) Раскрасьте боксплоты с помощью библиотеки RColorBrewer.
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Zinc, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
 
 ```{r}
+ggplot(cleaned_data, aes(x= Category, y=`Vitamin_A_-_RAE`, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Vitamin_B12, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Vitamin_B6, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Vitamin_C, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Vitamin_E, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Vitamin_K, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+2) Наложите на боксплоты beeplots - задание со звёздочкой.
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Vitamin_K, color = Category)) +
+  geom_boxplot() +
+  geom_beeswarm()
+  
+
+```
 
 
+3) Раскрасьте боксплоты с помощью библиотеки RColorBrewer.
+```{r}
+help(brewer.pal)
 
+display.brewer.all()
+display.brewer.pal(n = 3, name = 'Set2')
+colors <- brewer.pal(n = 3, name = 'Set2')
+boxplot(Carbohydrate ~ Category, data = cleaned_data, col = colors)
+
+```
+
+```{r}
+cleaned_data %>% 
+  select(Category, where(is.numeric)) %>%
+  summarize(across(where(is.numeric), function(x) boxplot(x ~ Category, col = colors)))
 ```
 
 ## Категориальные переменные
@@ -582,10 +650,13 @@ ggplot(cleaned_data, aes(x= Category, y=Sodium, fill=Category)) +
 
 ```{r}
 
-
+ggplot(cleaned_data, aes (x= reorder (Category, Category, function (x)- length (x)))) +
+ geom_bar(fill='green') +
+ labs(x='Category')
 
 ```
 
+Был выбран вариант - столбчатая диаграмма. Данный тип визуализации подходит для сравнения частот или пропорций различных категорий. Категории в анализируемом случае не представляют собой части целого, поэтому круговая диаграмма в данном случае не целесобразна.
 
 # Статистические оценки
 
@@ -593,23 +664,61 @@ ggplot(cleaned_data, aes(x= Category, y=Sodium, fill=Category)) +
 
 1) Оцените каждую переменную на соответствие нормальному распределению с помощью теста Шапиро-Уилка. Какие из переменных являются нормальными и как как вы это поняли?
 
+В анализируемом датасете нет переменных, распределение которых не отличается от нормального. Так как p-value в тесте Шапиро-Уилка для всех переменных меньше 0.05, мы можем отвергнуть нулевую гипотезу об отсутствие различий в распределении переменной от нормального распределения.
+
 ```{r}
-
-
-
+shapiro.test(cleaned_data$Alpha_Carotene)
+shapiro.test(cleaned_data$Beta_Carotene)
+shapiro.test(cleaned_data$Beta_Cryptoxanthin)
+shapiro.test(cleaned_data$Carbohydrate)
+shapiro.test(cleaned_data$Cholesterol)
+shapiro.test(cleaned_data$Choline)
+shapiro.test(cleaned_data$Fiber)
+shapiro.test(cleaned_data$Lutein_and_Zeaxanthin)
+shapiro.test(cleaned_data$Lycopene)
+shapiro.test(cleaned_data$Niacin)
+shapiro.test(cleaned_data$Protein)
+shapiro.test(cleaned_data$Retinol)
+shapiro.test(cleaned_data$Riboflavin)
+shapiro.test(cleaned_data$Selenium)
+shapiro.test(cleaned_data$Sugar_Total)
+shapiro.test(cleaned_data$Thiamin)
+shapiro.test(cleaned_data$Water)
+shapiro.test(cleaned_data$Monosaturated_Fat)
+shapiro.test(cleaned_data$Polysaturated_Fat)
+shapiro.test(cleaned_data$Saturated_Fat)
+shapiro.test(cleaned_data$Total_Lipid)
+shapiro.test(cleaned_data$Calcium)
+shapiro.test(cleaned_data$Copper)
+shapiro.test(cleaned_data$Iron)
+shapiro.test(cleaned_data$Magnesium)
+shapiro.test(cleaned_data$Phosphorus)
+shapiro.test(cleaned_data$Potassium)
+shapiro.test(cleaned_data$Sodium)
+shapiro.test(cleaned_data$Zinc)
+shapiro.test(cleaned_data$`Vitamin_A_-_RAE`)
+shapiro.test(cleaned_data$Vitamin_B12)
+shapiro.test(cleaned_data$Vitamin_B6)
+shapiro.test(cleaned_data$Vitamin_C)
+shapiro.test(cleaned_data$Vitamin_E)
+shapiro.test(cleaned_data$Vitamin_K)
 ```
 
 2) Постройте для каждой количественной переменной QQ-плот. Отличаются ли выводы от теста Шапиро-Уилка? Какой метод вы бы предпочли и почему?
 
 ```{r}
+cleaned_data %>% 
+  select(where(is.numeric)) %>%
+  summarize(across(where(is.numeric), function(x) qqplot(x) + qqline(x)))
 
-
-
+cleaned_data %>% 
+  select(Category, where(is.numeric)) %>%
+  summarize(across(where(is.numeric), function(x) qqplot(x ~ Category, col = colors)))
 ```
 
 3) Ниже напишите, какие ещё методы проверки на нормальность вы знаете и какие у них есть ограничения.
 
-**Напишите текст здесь**
+a) Построение гистограммы. Если данные примерно повторяют форму кривой колокола на гистограмме, мы можем предположить, что набор данных имеет нормальное распределение.
 
 
 ## Сравнение групп
