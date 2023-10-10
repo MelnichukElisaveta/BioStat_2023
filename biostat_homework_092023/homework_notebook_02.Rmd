@@ -9,6 +9,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(DescTools)
+library(RColorBrewer)
+library(ggplot2)
+library(ggbeeswarm)
 
 ```
 
@@ -365,6 +368,203 @@ cleaned_data %>%
 ## Количественные переменные
 
 1) Для каждой количественной переменной сделайте боксплоты по группам. Расположите их либо на отдельных рисунках, либо на одном, но читаемо;
+```{r}
+ggplot(cleaned_data, aes(x= Category, y= Alpha_Carotene, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y= Beta_Carotene, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y= Beta_Cryptoxanthin, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Carbohydrate, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Cholesterol, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Choline, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Fiber, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Lutein_and_Zeaxanthin, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Lycopene, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Niacin, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Protein, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Retinol, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Riboflavin, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Selenium, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Sugar_Total, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Thiamin, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Water, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Monosaturated_Fat, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Polysaturated_Fat, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Saturated_Fat, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Total_Lipid, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Calcium, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Copper, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Iron, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Magnesium, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Phosphorus, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Potassium, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
+
+```{r}
+ggplot(cleaned_data, aes(x= Category, y=Sodium, fill=Category)) +
+ geom_boxplot() +
+ stat_summary(fun=mean, geom='point', shape= 20 , size= 8 ) +
+ theme(legend.position ='none')
+```
 
 2) Наложите на боксплоты beeplots - задание со звёздочкой.
 
