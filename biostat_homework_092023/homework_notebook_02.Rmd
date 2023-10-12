@@ -12,6 +12,7 @@ library(DescTools)
 library(RColorBrewer)
 library(ggplot2)
 library(ggbeeswarm)
+library(corrplot)
 
 ```
 
@@ -704,30 +705,77 @@ shapiro.test(cleaned_data$Vitamin_E)
 shapiro.test(cleaned_data$Vitamin_K)
 ```
 
+```{r}
+result_shapiro <- cleaned_data %>%
+  select(where(is.numeric)) %>%
+  summarise(across(everything(), ~ list(shapiro.test(.))))
+
+view(result_shapiro)
+
+```
+
 2) Постройте для каждой количественной переменной QQ-плот. Отличаются ли выводы от теста Шапиро-Уилка? Какой метод вы бы предпочли и почему?
+Я бы предпочла тест Шапиро-Уилка, так как QQ-плот это способ визуально проверить, соответствует ли набор данных нормальному распределению, что может приводить к субъективизации результатов оценки графика. Тест Шапиро-Уилка наоборот является более формализованным подходом за счет оценки на основе p-value.
 
 ```{r}
-cleaned_data %>% 
+cleaned_data %>%
   select(where(is.numeric)) %>%
-  summarize(across(where(is.numeric), function(x) qqplot(x) + qqline(x)))
+  pivot_longer(everything()) %>% 
+  ggplot(aes(sample = value)) +
+  stat_qq() +
+  facet_wrap(~name, scales = "free")
 
-cleaned_data %>% 
-  select(Category, where(is.numeric)) %>%
-  summarize(across(where(is.numeric), function(x) qqplot(x ~ Category, col = colors)))
 ```
 
 3) Ниже напишите, какие ещё методы проверки на нормальность вы знаете и какие у них есть ограничения.
 
-a) Построение гистограммы. Если данные примерно повторяют форму кривой колокола на гистограмме, мы можем предположить, что набор данных имеет нормальное распределение.
+a) Построение гистограммы. Если данные примерно повторяют форму кривой колокола на гистограмме, мы можем предположить, что набор данных имеет нормальное распределение.Ограничение: визуальная оценка субъективна, нет четких критериев.
+
+б) Тест Колмогорова-Смирнова. Отграничения: критерий требует, чтобы выборка была достаточно большой.
 
 
 ## Сравнение групп
 
 1) Сравните группы (переменная **Category**) по каждой переменной (как количественной, так и категориальной). Для каждой переменной выберите нужный критерий и кратко обоснуйте его выбор в комментариях.
 
+Так как выборки независимы и распределение данных отличается от нормального, то будет использован критерий Манна-Уитни [Гржибовский А.М., Иванов С.В., and Горбатова М.А.. "Сравнение количественных данных двух независимых выборок с использованием программного обеспечения Statistica и SPSS: параметрические и непараметрические критерии" Наука и здравоохранение, no. 2, 2016, pp. 5-28]
+
 ```{r}
-
-
+wilcox.test(cleaned_data$Alpha_Carotene ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Beta_Carotene ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Beta_Cryptoxanthin ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Carbohydrate ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Cholesterol ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Choline ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Fiber ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Lutein_and_Zeaxanthin ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Lycopene ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Niacin ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Protein ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Retinol ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Riboflavin ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Selenium ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Sugar_Total ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Thiamin ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Water ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Monosaturated_Fat ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Polysaturated_Fat ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Saturated_Fat ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Total_Lipid ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Calcium ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Copper ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Iron ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Magnesium ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Phosphorus ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Potassium ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Sodium ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Zinc ~ cleaned_data$Category)
+wilcox.test(cleaned_data$`Vitamin_A_-_RAE` ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Vitamin_B12 ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Vitamin_B6 ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Vitamin_C ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Vitamin_E ~ cleaned_data$Category)
+wilcox.test(cleaned_data$Vitamin_K ~ cleaned_data$Category)
 
 ```
 
@@ -738,8 +786,9 @@ a) Построение гистограммы. Если данные приме
 1) Создайте корреляционную матрицу с визуализацией и поправкой на множественные сравнения. Объясните, когда лучше использовать корреляционные матрицы и в чём минусы и плюсы корреляционных исследований.
 
 ```{r}
-
-
+cleaned_data %>%
+  select(where(is.numeric))%>%
+  corrplot(cor)
 
 ```
 
