@@ -1,0 +1,263 @@
+---
+title: "HW1"
+author: "Elisaveta"
+date: "2023-11-04"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(tidyverse)
+```
+
+# Task 1
+```{r}
+insurance <- read.csv('insurance_cost.csv',
+                 stringsAsFactors = T)
+
+```
+# Task 2
+```{r}
+ggplot(data = insurance, 
+       aes(x = bmi)) +
+  geom_histogram()
+
+ggplot(data = insurance, 
+       aes(x = charges)) +
+  geom_histogram()
+```
+# Task 3
+```{r}
+charges_mean <- round(mean(insurance$charges),1)
+charges_median <- round(median(insurance$charges),1)
+
+
+ggplot(data = insurance, 
+       aes(x = charges)) +
+  geom_density() +
+  geom_vline(aes(xintercept = charges_median), color = 'red') +
+  annotate("text", 
+           x= charges_median -3000, 
+           y= 0,
+           label=paste0("Median=", charges_median),
+           color = 'red') +
+  geom_vline(aes(xintercept = charges_mean), color = 'blue') +
+  annotate("text", 
+           x= charges_mean+3500, 
+           y= 0,
+           label=paste0("Mean=", charges_mean),
+           color = 'blue')
+  theme_minimal() + 
+  labs(y = 'Плотность', x = 'Расходы')
+```
+# Task 4
+```{r}
+ggplot() +
+  geom_boxplot(data = insurance, 
+               aes(x = charges, y = sex)) +
+  theme_minimal() + 
+  labs(y = 'Пол', x = 'Расходы')
+
+ggplot() +
+  geom_boxplot(data = insurance, 
+               aes(x = charges, y = smoker)) +
+  theme_minimal() + 
+  labs(y = 'Курение', x = 'Расходы')
+
+ggplot() +
+  geom_boxplot(data = insurance, 
+               aes(x = charges, y = region)) +
+  theme_minimal() + 
+  labs(y = 'Регион', x = 'Расходы')
+```
+# Task 5
+
+```{r}
+dencity_plot <- ggplot(data = insurance, 
+       aes(x = charges)) +
+  geom_density() +
+  geom_vline(aes(xintercept = charges_median), color = 'red') +
+  annotate("text", 
+           x= charges_median -3000, 
+           y= 0,
+           label=paste0("Median=", charges_median),
+           color = 'red') +
+  geom_vline(aes(xintercept = charges_mean), color = 'blue') +
+  annotate("text", 
+           x= charges_mean+3500, 
+           y= 0,
+           label=paste0("Mean=", charges_mean),
+           color = 'blue') +
+  theme_minimal() + 
+  labs(y = 'Плотность', x = 'Расходы')
+bx1 <- ggplot() +
+  geom_boxplot(data = insurance, 
+               aes(x = charges, y = sex)) +
+  theme_minimal() + 
+  labs(y = 'Пол', x = 'Расходы')
+bx2 <- ggplot() +
+  geom_boxplot(data = insurance, 
+               aes(x = charges, y = smoker)) +
+  theme_minimal() + 
+  labs(y = 'Курение', x = 'Расходы')
+bx3 <- ggplot() +
+  geom_boxplot(data = insurance, 
+               aes(x = charges, y = region)) +
+  theme_minimal() + 
+  labs(y = 'Регион', x = 'Расходы')
+
+ggpubr::ggarrange(dencity_plot, bx1, bx2, bx3,
+                  labels = c("График плотности", "Боксплот 1", "Боксплот 2", "Боксплот 3"),
+                  ncol = 1, nrow = 4) +
+  ggtitle('4 графика')
+```
+# Task 6
+```{r}
+ggplot(data = insurance, 
+       aes(x = charges, color = region, fill = region, group = region)) +
+  geom_density() +
+  facet_grid(. ~ region) +
+  theme_minimal() + 
+  labs(y = 'Плотность', x = 'Расходы')
+
+```
+
+# Task 7
+```{r}
+insurance %>% 
+  ggplot(aes(x=age, y=charges)) + 
+    geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('scatter plot отношения переменных age и charges') +
+  labs(y = 'Расходы', x = 'Возраст') +
+  theme(
+    axis.text.x = element_text(size = 14))
+```
+# Task 8
+```{r}
+insurance %>% 
+  ggplot(aes(x=age, y=charges)) + 
+    geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('scatter plot отношения переменных age и charges') +
+  labs(y = 'Расходы', x = 'Возраст') +
+  theme(
+    axis.text.x = element_text(size = 14))+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+# Task 9
+```{r}
+insurance %>% 
+  ggplot(aes(x=age, y=charges, collor = smoker)) + 
+    geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('scatter plot отношения переменных age и charges') +
+  labs(y = 'Расходы', x = 'Возраст') +
+  theme(
+    axis.text.x = element_text(size = 14))+
+  geom_smooth(method = "lm", se = FALSE)
+```
+# Task 10
+
+```{r}
+insurance %>% 
+  ggplot(aes(x=bmi, y=charges)) + 
+    geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('scatter plot отношения переменных bmi и charges') +
+  labs(y = 'Расходы', x = 'bmi') +
+  theme(
+    axis.text.x = element_text(size = 14))
+
+insurance %>% 
+  ggplot(aes(x=bmi, y=charges)) + 
+    geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('scatter plot отношения переменных bmi и charges') +
+  labs(y = 'Расходы', x = 'bmi') +
+  theme(
+    axis.text.x = element_text(size = 14))+
+  geom_smooth(method = "lm", se = FALSE)
+
+insurance %>% 
+  ggplot(aes(x=bmi, y=charges, collor = smoker)) + 
+    geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('scatter plot отношения переменных bmi и charges') +
+  labs(y = 'Расходы', x = 'bmi') +
+  theme(
+    axis.text.x = element_text(size = 14))+
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+# Task 11
+Вопрос: сравнить расходы среди курящих в зависимости от пола.
+
+Аргументация выбора типа графика.  Боксплот показывает распределение значений в выборке и основные статистические показатели: медиану, верхний и нижний квартили, наблюдаемые минимумы и максимумы, а также выбросы. Удобно использовать для быстрой оценки данных.
+
+```{r}
+insurance %>%
+  filter(smoker == "yes") %>%
+  ggplot(aes(x = charges, y = sex)) +
+  geom_boxplot() +
+  theme_minimal() + 
+  labs(y = 'Пол', x = 'Расходы')+
+  ggtitle('расходы среди курящих в зависимости от пола')
+```
+# Task 12
+Вопрос: существует ли взаимосвязь bmi и возраста среди женщин.
+
+Аргументация выбора типа графика. Диаграммы рассеяния удобно использовать для демонстрации наличия или отсутствия корреляции между двумя переменными.
+
+```{r}
+insurance %>%
+  filter(sex == "female") %>%
+  ggplot(aes(x = bmi, y = age)) +
+  geom_point(size=3) +
+  theme_minimal() +
+  ggtitle('Диаграмма рассеяния bmi и возраста') +
+  labs(y = 'Возраст', x = 'bmi') + 
+  geom_smooth(method = "lm", se = FALSE)
+```
+# Task 13
+Вопрос: представить визуализацию распределения данных расходы в зависимости от количества детей, у проживающих в ренионе northeast
+
+Аргументация выбора типа графика. График плотности удобный инструмент визуализации распределения данных/
+
+```{r}
+insurance %>%
+  filter(region == "northeast") %>%
+  ggplot(aes(x = charges, color = children, fill = children, group = children)) +
+  geom_density() +
+  facet_grid(. ~ children) +
+  theme_minimal() + 
+  labs(y = 'Плотность', x = 'Расходы') +
+  ggtitle('График плотности вероятности') 
+```
+# Task 14
+```{r}
+insurance <- insurance %>% 
+  mutate(
+    age_group = case_when(
+      age < 35 ~ "21-34",
+      age >= 35 & age < 50 ~ "35-49",
+      age >= 50 ~ "50+"
+    ))
+
+insurance %>%
+  ggplot(aes(x = bmi, y = log(charges))) +
+  geom_point(size=3, color = "#926EAE", alpha=0.7) +
+  theme_minimal() +
+  ggtitle('Отношение индекса массы тела к логарифму трат по возрастным группам') +
+  labs(y = 'log(charges)', x = 'bmi') + 
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_grid(. ~ age_group)
+```
+
+
+```{r}
+
+
+```
