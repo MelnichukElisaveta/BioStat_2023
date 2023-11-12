@@ -66,9 +66,7 @@ new_data <- subset(new_data, select = - c(1))
 
 corrplot(cor(new_data), method = 'number')
 
-new_data %>% 
-  cor() %>%
-  network_plot(min_cor = .0)
+
 
 ```
 
@@ -166,7 +164,7 @@ fviz_contrib(data_full.pca, choice = "var", axes = 3, top = 24) # 3
 
 #Task8
 
-```{r}
+```{r, eval=FALSE}
 library(ggbiplot)
 
 ggbiplot(data_full.pca, 
@@ -209,7 +207,7 @@ umap_prep %>%
 
 #Task11
 
-```{r}
+```{r, eval=FALSE}
 
 new_data1 <- subset(new_data, select = c(1:14))
 data_full.pca1 <- prcomp(new_data1, 
@@ -234,7 +232,7 @@ ggbiplot(data_full.pca1,
   theme_minimal()
 ```
 
-```{r}
+```{r, eval=FALSE}
 new_data2 <- subset(new_data, select = c(6:19))
 data_full.pca2 <- prcomp(new_data2, 
                         scale = T)
@@ -258,7 +256,7 @@ ggbiplot(data_full.pca2,
   theme_minimal()
 ```
 
-```{r}
+```{r, eval=FALSE}
 new_data3 <- subset(new_data, select = -c(Unemployment, GDP, GNI, Sucide_Rate, Hospital_beds))
 data_full.pca3 <- prcomp(new_data3, 
                         scale = T)
@@ -284,7 +282,7 @@ ggbiplot(data_full.pca3,
 
 #Task12
 
-```{r}
+```{r, eval=FALSE}
 data2 <- data %>%
   mutate(is_Africa = ifelse(continent == "Africa", 1, 0),
          is_Oceania = ifelse(continent == "Oceania", 1, 0))
